@@ -27,12 +27,15 @@ searchInput.addEventListener('input', (event) => {
     console.log(inputSearch);
 
     const filteredPokeDex = PokeDex.filter((pokemon) => {
-        return pokemon.name.includes(inputSearch)
+        result = pokemon.name.includes(inputSearch)
+        return result
     })
+
     addPokeToDOM(filteredPokeDex)
-    console.table(filteredPokeDex.name)
+    // console.table(filteredPokeDex.name)
 
 })
+
 
 // Sort
 sortInput.addEventListener('change', (event) => {
@@ -61,12 +64,24 @@ sortInput.addEventListener('change', (event) => {
                 
                 return 0
             })
-            break
-    }
+        // case 'type':
+        //         const inputSearch = searchInput.value
+        //         // console.log(inputSearch);
 
+        //         getTypes(PokeDex, inputSearch)
+                
+        //     break
+    }
 
     addPokeToDOM(PokeDex)
 })
+
+// // sort by type function
+// function getTypes(PokeDex, inputSearch) {
+//     const filteredPokeDex = PokeDex.filter((pokemon) => {
+//         return pokemon.types.type.name.includes(inputSearch)
+//     })
+// }
 
 // calls raw data from api in array
 getData()
@@ -76,7 +91,7 @@ getData()
     })
     .then((dP) => {
         PokeDex = dP
-        addPokeToDOM(dP)
+        addPokeToDOM(dP)    
     })
 
 async function getDetailedData(dexArray) {
@@ -89,9 +104,7 @@ async function getDetailedData(dexArray) {
         detailedPD.push(pokeD)
         // console.log(pokeD);
     }
-
-    PokeDex = detailedPD
-
+    console.log(detailedPD);
     return detailedPD
 }
 
