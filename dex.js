@@ -26,8 +26,8 @@ searchInput.addEventListener('input', (event) => {
     const inputSearch = event.target.value
     console.log(inputSearch);
 
-    const filteredPokeDex = PokeDex.filtered((pokemon) => {
-        return pokemon.name.includes(searchInput)
+    const filteredPokeDex = PokeDex.filter((pokemon) => {
+        return pokemon.name.includes(inputSearch)
     })
     addPokeToDOM(filteredPokeDex)
     console.table(filteredPokeDex.name)
@@ -46,7 +46,7 @@ sortInput.addEventListener('change', (event) => {
         case 'id-des':
             PokeDex.sort((pokeA, pokeB) => pokeB.id - pokeA.id)
             break
-        case 'name-asc':
+        case 'name-des':
             PokeDex.sort((pokeA, pokeB) => {
                 if (pokeA.name > pokeB.name) return -1
                 if (pokeA.name < pokeB.name) return 1
@@ -54,7 +54,7 @@ sortInput.addEventListener('change', (event) => {
                 return 0
             })
             break
-        case 'name-dec':
+        case 'name-asc':
             PokeDex.sort((pokeA, pokeB) => {
                 if (pokeA.name < pokeB.name) return -1
                 if (pokeA.name > pokeB.name) return 1
@@ -69,28 +69,41 @@ sortInput.addEventListener('change', (event) => {
 })
 
 // calls raw data from api in array
-getData().then(dexArray => {
-    //console.log(dexArray);
-    addPokeToDOM(dexArray)
-})
+getData()
+    .then(dexArray => {
+        //console.log(dexArray);
+        return getDetailedData(dexArray)
+    })
+    .then((dP) => {
+        PokeDex = dP
+        addPokeToDOM(dP)
+    })
 
-
-
-// function for adding poke data to cards
-async function addPokeToDOM(dataArr) {
-    let cardElements = ''
-    const cardContainer = document.getElementById('poke-cards')
-
+async function getDetailedData(dexArray) {
+    const detailedPD = []
+    
     // for in
-    for (const poke of dataArr) {
+    for (const poke of dexArray) {
         const pokeData = await fetch(poke.url)
         const pokeD = await pokeData.json()
-        PokeDex = pokeD
+        detailedPD.push(pokeD)
         // console.log(pokeD);
+    }
 
-        typeList = ''
-        pokeTypes = pokeD.types
+    PokeDex = detailedPD
+
+    return detailedPD
+}
+
+// function for adding poke data to cards
+async function addPokeToDOM(dP) {
+    let cardElements = ''
+    const cardContainer = document.getElementById('poke-cards')
+        for (const dPD of dP) {
+            pokeTypes = dPD.types
         // console.log(pokeTypes);
+        
+        typeList = ''
         pokeTypesArr = pokeTypes.map(pokeType => pokeType.type.name)
         pokeTypesArr.forEach(pokeType => {
             switch (pokeType) {
@@ -144,9 +157,9 @@ async function addPokeToDOM(dataArr) {
 
         cardElements += `
         <article class="card">
-            <img src="${pokeD.sprites.other.dream_world.front_default}" alt="${pokeD.name}">
-            <h5>${pokeD.name}</h5>
-            <span>ID: ${pokeD.id}</span>
+            <img src="${dPD.sprites.other.dream_world.front_default}" alt="${dPD.name}">
+            <h5>${dPD.name}</h5>
+            <span>ID: ${dPD.id}</span>
             <div class="types">
                 ${typeList}
             </div>
