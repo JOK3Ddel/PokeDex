@@ -15,9 +15,19 @@
         <img src="imgs/icon.png" alt="Icon">
         <h1>PokeDex</h1>
         <p id="search">Search</p>
-        <input type="text" id="input-search">
+        <input type="search" id="search-input">
     </header>
-
+    <section>
+        <span>
+            <label for="sort-input">Sort</label>
+            <select name="sort" id="sort-input">
+                <option value="id-asc">ID Ascending</option>
+                <option value="id-des">ID Descending</option>
+                <option value="name-asc">Name Ascending (A-Z)</option>
+                <option value="name-des">Name Descending (Z-A)</option>
+            </select>
+        </span>
+    </section>
     <section id="poke-cards">
         <article class="card">
             <img src="" alt="Pokemon Image">

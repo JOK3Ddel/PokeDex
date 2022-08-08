@@ -4,6 +4,12 @@
     - Sort function for a-z, z-a, and numerically high to low, low to high  || use .sort
 */
 
+const sortInput = document.querySelector('#sort-input')
+const searchInput = document.querySelector('#search-input')
+
+letPokeDexArr = []
+
+
 // better fetch
 
 // fetches raw data from api returning in an array
@@ -17,9 +23,10 @@ const getData = async () => {
 }
 
 // Search
-let inputSearch = ''
-document.getElementById("input-search").addEventListener('change', (event) => {
-    inputSearch = event.target.value
+searchInput.addEventListener('input', (event) => {
+    const inputSearch = event.target.value
+    console.log(inputSearch);
+
     /* to-do
     - call function that makes global array containing names that contain input value
     - pass new data array to addPokeToDOM
@@ -27,7 +34,46 @@ document.getElementById("input-search").addEventListener('change', (event) => {
     - same for id and types
      */
     // compare input to database/api
+    const filteredPokeDex = pokeD.filtered((pokemon) => {
+        return pokemon.name.includes(searchInput)
+    })
+    addPokeToDOM(filteredPokeDex)
+    console.table(filteredPokeDex.name)
 
+})
+
+// Sort
+sortInput.addEventListener('change', (event) => {
+    const sortBy = event.target.value
+    console.log(sortBy);
+
+    switch (sortBy) {
+        case 'id-asc':
+            pokeD.sort((pokeA, pokeB) => pokeA.id - pokeB.id)
+            break
+        case 'id-des':
+            pokeD.sort((pokeA, pokeB) => pokeB.id - pokeA.id)
+            break
+        case 'name-asc':
+            pokeD.sort((pokeA, pokeB) => {
+                if (pokeA.name > pokeB.name) return -1
+                if (pokeA.name < pokeB.name) return 1
+                
+                return 0
+            })
+            break
+        case 'name-dec':
+            pokeD.sort((pokeA, pokeB) => {
+                if (pokeA.name < pokeB.name) return -1
+                if (pokeA.name > pokeB.name) return 1
+                
+                return 0
+            })
+            break
+    }
+
+
+    addPokeToDOM(pokeD)
 })
 
 // calls raw data from api in array
@@ -119,7 +165,7 @@ async function addPokeToDOM(dataArr) {
 
 
 // // IIFE (imediately invoked function expression)
-// (async () => {
+// ;(async () => {
 //     const indexData = await getData()
 
 //     console.log(indexData);
