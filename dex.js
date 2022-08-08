@@ -1,13 +1,12 @@
 /*
     TO-DO:
-    - Search function for names, types and id  || use .filter
-    - Sort function for a-z, z-a, and numerically high to low, low to high  || use .sort
+    - Fix search and sort bug where no database is found
 */
 
 const sortInput = document.querySelector('#sort-input')
 const searchInput = document.querySelector('#search-input')
 
-letPokeDexArr = []
+let PokeDex = []
 
 
 // better fetch
@@ -27,14 +26,7 @@ searchInput.addEventListener('input', (event) => {
     const inputSearch = event.target.value
     console.log(inputSearch);
 
-    /* to-do
-    - call function that makes global array containing names that contain input value
-    - pass new data array to addPokeToDOM
-
-    - same for id and types
-     */
-    // compare input to database/api
-    const filteredPokeDex = pokeD.filtered((pokemon) => {
+    const filteredPokeDex = PokeDex.filtered((pokemon) => {
         return pokemon.name.includes(searchInput)
     })
     addPokeToDOM(filteredPokeDex)
@@ -49,13 +41,13 @@ sortInput.addEventListener('change', (event) => {
 
     switch (sortBy) {
         case 'id-asc':
-            pokeD.sort((pokeA, pokeB) => pokeA.id - pokeB.id)
+            PokeDex.sort((pokeA, pokeB) => pokeA.id - pokeB.id)
             break
         case 'id-des':
-            pokeD.sort((pokeA, pokeB) => pokeB.id - pokeA.id)
+            PokeDex.sort((pokeA, pokeB) => pokeB.id - pokeA.id)
             break
         case 'name-asc':
-            pokeD.sort((pokeA, pokeB) => {
+            PokeDex.sort((pokeA, pokeB) => {
                 if (pokeA.name > pokeB.name) return -1
                 if (pokeA.name < pokeB.name) return 1
                 
@@ -63,7 +55,7 @@ sortInput.addEventListener('change', (event) => {
             })
             break
         case 'name-dec':
-            pokeD.sort((pokeA, pokeB) => {
+            PokeDex.sort((pokeA, pokeB) => {
                 if (pokeA.name < pokeB.name) return -1
                 if (pokeA.name > pokeB.name) return 1
                 
@@ -73,7 +65,7 @@ sortInput.addEventListener('change', (event) => {
     }
 
 
-    addPokeToDOM(pokeD)
+    addPokeToDOM(PokeDex)
 })
 
 // calls raw data from api in array
@@ -161,6 +153,8 @@ async function addPokeToDOM(dataArr) {
 
     }
     cardContainer.innerHTML = cardElements
+
+    PokeDex = pokeD
 }
 
 
