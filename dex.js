@@ -1,7 +1,7 @@
 /*
     TO-DO:
-    - Search function for names, types and id
-    - Sort function for a-z, z-a, and numerically high to low, low to high
+    - Search function for names, types and id  || use .filter
+    - Sort function for a-z, z-a, and numerically high to low, low to high  || use .sort
 */
 
 // better fetch
@@ -16,23 +16,24 @@ const getData = async () => {
     return (dataArr)
 }
 
+// Search
+let inputSearch = ''
+document.getElementById("input-search").addEventListener('change', (event) => {
+    inputSearch = event.target.value
+    /* to-do
+    - call function that makes global array containing names that contain input value
+    - pass new data array to addPokeToDOM
+
+    - same for id and types
+     */
+    // compare input to database/api
+
+})
+
 // calls raw data from api in array
 getData().then(dexArray => {
     //console.log(dexArray);
     addPokeToDOM(dexArray)
-    
-    // Search
-    let inputSearch = ''
-    document.getElementById("input-search").addEventListener('keypress', (e) => {
-        if (e.key === 'Backspace') {
-            inputSearch = inputSearch.slice(-1)
-        } else {
-            inputSearch =+ e.key
-        }
-
-        // compare input to database/api
-
-    })
 })
 
 
