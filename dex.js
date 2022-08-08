@@ -85,6 +85,7 @@ async function addPokeToDOM(dataArr) {
     for (const poke of dataArr) {
         const pokeData = await fetch(poke.url)
         const pokeD = await pokeData.json()
+        PokeDex = pokeD
         // console.log(pokeD);
 
         typeList = ''
@@ -154,7 +155,6 @@ async function addPokeToDOM(dataArr) {
     }
     cardContainer.innerHTML = cardElements
 
-    PokeDex = pokeD
 }
 
 
