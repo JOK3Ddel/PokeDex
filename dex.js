@@ -91,18 +91,44 @@ getData()
     })
 
 async function getDetailedData(dexArray) {
-    const detailedPD = []
+    const detailedPD = dexArray.map(async (pokemon) => {
+        const pokeData = await fetch(pokemon.url)
+        const pokeD = await pokeData.json()
+        return pokeD
+    })
+    
+    const detailedData = Promise.all(detailedPD)
+    return detailedData 
     
     // for in
-    for (const poke of dexArray) {
-        const pokeData = await fetch(poke.url)
-        const pokeD = await pokeData.json()
-        detailedPD.push(pokeD)
-        // console.log(pokeD);
-    }
-    console.log(detailedPD);
-    return detailedPD
+    // for (const poke of dexArray) {
+    //     const pokeData = await fetch(poke.url)
+    //     const pokeD = await pokeData.json()
+    //     detailedPD.push(pokeD)
+    //     // console.log(pokeD);
+    // }
+
+    //console.log(detailedPD);
+    
 }
+
+// // IIFE (imediately invoked function expression)
+// ;(async () => {
+//     const indexData = await getData()
+
+//     console.log(indexData);
+// })()
+
+// // Promise
+//  const pokemonPromiseArr = pokemonindex.map(async (pokemon) => {
+//     const response = await fetch(pokemon.url)
+//     const data = await response.json()
+//     return data
+
+//     const pokemonArr = Promise.all(pokemonPromiseArr)
+
+//     return pokemonArr
+//  })
 
 // function for adding poke data to cards
 async function addPokeToDOM(dP) {
@@ -180,20 +206,3 @@ async function addPokeToDOM(dP) {
 }
 
 
-// // IIFE (imediately invoked function expression)
-// ;(async () => {
-//     const indexData = await getData()
-
-//     console.log(indexData);
-// })()
-
-// // Promise
-//  const pokemonPromiseArr = pokemonindex.map(async (pokemon) => {
-//     const response = await fetch(pokemon.url)
-//     const data = await response.json()
-//     return data
-
-//     const pokemonArr = Promise.all(pokemonPromiseArr)
-
-//     return pokemonArr
-//  })
