@@ -1,7 +1,3 @@
-/*
-    TO-DO:
-    - Fix search and sort bug where no database is found
-*/
 
 const sortInput = document.querySelector('#sort-input')
 const searchInput = document.querySelector('#search-input')
