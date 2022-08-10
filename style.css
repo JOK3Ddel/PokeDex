@@ -3,6 +3,11 @@
     src: url(fonts/Play_Pretend.otf);
 }
 
+@media only screen and (max-width: 600px) {
+    header p#search {flex-wrap: wrap;}
+    header #search-input {flex-wrap: wrap;}
+}
+
 * {
     margin: 0;
     padding: 0;
