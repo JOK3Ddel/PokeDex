@@ -40,6 +40,13 @@ header p#search {
 
 }
 
+body label#sort {
+    color: white;
+    padding: 0 3px;
+    background-color: grey;
+    border-radius: 3px;
+}
+
 h5 {
     text-transform: uppercase;
     font-size: large;
