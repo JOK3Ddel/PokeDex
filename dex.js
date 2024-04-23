@@ -9,7 +9,7 @@ let PokeDex = []
 
 // fetches raw data from api returning in an array
 const getData = async () => {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151")
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
     const data = await response.json()
     // console.log(data)
     const dataArr = data.results
@@ -22,13 +22,30 @@ searchInput.addEventListener('input', (event) => {
     const inputSearch = event.target.value
     console.log(inputSearch);
 
-    const filteredPokeDex = PokeDex.filter((pokemon) => {
-        result = pokemon.name.includes(inputSearch)
-        return result
-    })
+    if (Number(inputSearch)) {
+        // Search IDs
+        const filteredPokeDexID = PokeDex.filter((pokemon) => {
+            result = (pokemon.id == inputSearch)
+            return result
+        })
 
-    addPokeToDOM(filteredPokeDex)
-    // console.table(filteredPokeDex.name)
+        
+        // Logging for debugging
+        console.log("Filtered Pokemon:", filteredPokeDexID.id);
+        
+        addPokeToDOM(filteredPokeDexID)
+
+    } else {
+        // Search names
+        const filteredPokeDex = PokeDex.filter((pokemon) => {
+            //result = pokemon.name.includes(inputSearch)
+            result = pokemon.name.startsWith(inputSearch)
+            return result
+        })
+
+        addPokeToDOM(filteredPokeDex)
+        console.table(filteredPokeDex.name)
+    }
 
 })
 
