@@ -9,7 +9,7 @@ let PokeDex = []
 
 // fetches raw data from api returning in an array
 const getData = async () => {
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1025")
+    const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=649")
     const data = await response.json()
     // console.log(data)
     const dataArr = data.results
